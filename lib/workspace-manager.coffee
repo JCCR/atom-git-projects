@@ -20,12 +20,15 @@ class WorkspaceManager
   constructor: ->
 
   setupWorkspace: (callback) ->
+    # Activate custom workspace styling
+    atom.views.getView(atom.workspace).classList.add 'codewars-active'
+
     # We don't need the tree view
     atom.packages.getActivePackage('tree-view')?.deactivate()
 
     # Let's close the item that's going to open
     disposable = new CompositeDisposable
-    disposable.add atom.workspace.observeTextEditors (editor) =>
+    disposable.add atom.workspace.observeTextEditors (editor) ->
       setImmediate ->
         editor.destroy()
         disposable.dispose()
